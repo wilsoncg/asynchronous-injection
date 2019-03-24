@@ -6,4 +6,9 @@
     <RootNamespace>Ploeh.Samples.BookingApi</RootNamespace>
   </PropertyGroup>
 
+  <ItemGroup>
+    <PackageReference Include="Akka" Version="1.3.12" />
+    <PackageReference Include="Akka.Persistence" Version="1.3.12" />
+  </ItemGroup>
+
 </Project>

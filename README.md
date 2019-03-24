@@ -4,6 +4,9 @@ Sample code supporting the blog article [Asynchronous Injection](http://blog.plo
 
 #### Todo
 
+Create reservation fails with timeout exception:
+* Recovery mechanism should be to remove booking as we responded to customer **'booking not accepted'**
+
 How about deposit taken after booking accepted:
 * Booking service accepted but payment not taken
 * Database unresponsive after booking
