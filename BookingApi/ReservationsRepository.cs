@@ -29,7 +29,7 @@ namespace Ploeh.Samples.BookingApi
 
         async Task<int> CreateInternal(Reservation reservation)
         {
-            var r = await SystemActors.
+            var r = await MvcApplication. SystemActors.
         }
 
         public Task<Reservation[]> ReadReservations(DateTimeOffset date)
@@ -81,8 +81,28 @@ namespace Ploeh.Samples.BookingApi
             {
                 var messages = offer.Snapshot as List<ReservationForCustomer>;
                 if (messages != null)
-                    _msgs = _msgs.Concat(messages);
+                    _msgs = _msgs.Concat(messages).ToList();
             });
+
+            // commands
+            Command<ReservationForCustomer>(r => Persist(r, s => {
+                _msgs.Add(r); //add msg to in-memory event store after persisting
+                if (++_msgsSinceLastSnapshot % 100 == 0)
+                {
+                    //time to save a snapshot
+                    SaveSnapshot(_msgs);
+                }
+            }));
+            Command<SaveSnapshotSuccess>(success => {
+                // soft-delete the journal up until the sequence # at
+                // which the snapshot was taken
+                DeleteMessages(success.Metadata.SequenceNr);
+            });
+            Command<SaveSnapshotFailure>(failure => {
+                // handle snapshot save failure...
+            });
+
+            //Command<GetMessages>(_ => Sender.Tell(new List<ReservationForCustomer>(_msgs)));
         }
     }
 
