@@ -18,7 +18,12 @@ namespace BookingApi.WebApplication
         }
 
         public static IWebHostBuilder CreateWebHostBuilder(string[] args) =>
-            WebHost.CreateDefaultBuilder(args)
-                .UseStartup<Startup>();
+            WebHost
+            .CreateDefaultBuilder(args)
+            .ConfigureLogging((hostingContext, logging) =>
+            {
+                logging.AddConsole();
+            })
+            .UseStartup<Startup>();
     }
 }

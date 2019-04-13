@@ -18,7 +18,7 @@ namespace Ploeh.Samples.BookingApi
 
         public Task<int> Create(Reservation reservation)
         {
-            var result = CreateInternal(reservation);
+            //var result = CreateInternal(reservation);
 
             reservations.Add(reservation);
             // Hardly a robut implementation, since indices will be reused,
@@ -27,9 +27,10 @@ namespace Ploeh.Samples.BookingApi
             return Task.FromResult(reservations.IndexOf(reservation));
         }
 
-        async Task<int> CreateInternal(Reservation reservation)
+        Task<int> CreateInternal(Reservation reservation)
         {
-            var r = await MvcApplication. SystemActors.
+            //var r = await MvcApplication. SystemActors.
+            return Task.FromResult(1);
         }
 
         public Task<Reservation[]> ReadReservations(DateTimeOffset date)

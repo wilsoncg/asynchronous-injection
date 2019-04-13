@@ -1,10 +1,13 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Mvc.ApiExplorer;
+using System;
 using System.Collections.Generic;
+using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
 using System.Text;
 
 namespace Ploeh.Samples.BookingApi
 {
-    public sealed class Reservation
+    public class Reservation
     {
         public Reservation(
             DateTimeOffset date,
@@ -26,9 +29,14 @@ namespace Ploeh.Samples.BookingApi
             IsAccepted = isAccepted;
         }
 
+        //[DefaultValue("01/01/2019 17:00:00")]
+        [Required]
         public DateTimeOffset Date { get; }
-        public string Email { get; }
+        [ApiParameterDescription.DefaultValue("person@email.com"), Required, EmailAddress]
+        public string Email { get; set; }
+        [Required, DefaultValue("name")]
         public string Name { get; }
+        [Required, DefaultValue(1)]
         public int Quantity { get; }
         public bool IsAccepted { get; }
 
