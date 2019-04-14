@@ -4,11 +4,11 @@
         <name>BookingApi.WebApplication</name>
     </assembly>
     <members>
-        <member name="M:BookingApi.WebApplication.Controllers.BookingController.Post(Ploeh.Samples.BookingApi.Reservation)">
+        <member name="M:BookingApi.WebApplication.Controllers.BookingController.Create(Ploeh.Samples.BookingApi.Reservation)">
             <summary>
             Creates a reservation
             </summary>
-            <param name="reservation">reservation</param>
+            <param name="reservation"></param>
             <returns>Status indicating whether the reservation request was sucessful or not</returns>
             <response code="200">Performs the reservation</response>
             <response code="409">The reservation cannot be fulfilled</response>

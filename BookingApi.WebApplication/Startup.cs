@@ -39,6 +39,7 @@ namespace BookingApi.WebApplication
                 var xmlFile = $"{Assembly.GetEntryAssembly().GetName().Name}.xml";
                 var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
                 c.IncludeXmlComments(xmlPath);
+                c.EnableAnnotations();
 
             });
             services.AddSingleton<ActorService>(s => 

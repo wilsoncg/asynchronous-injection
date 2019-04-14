@@ -7,6 +7,9 @@ using Ploeh.Samples.BookingApi;
 using MvcControllerBase = Microsoft.AspNetCore.Mvc.ControllerBase;
 using IMvcActionResult = Microsoft.AspNetCore.Mvc.IActionResult;
 using System.Net;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel;
+using Swashbuckle.AspNetCore.Annotations;
 
 namespace BookingApi.WebApplication.Controllers
 {
@@ -14,7 +17,7 @@ namespace BookingApi.WebApplication.Controllers
     [ApiController]
     public class BookingController : MvcControllerBase
     {
-        private readonly ActorService _actorService;
+        readonly ActorService _actorService;
 
         public BookingController(ActorService actorService)
         {
@@ -24,14 +27,15 @@ namespace BookingApi.WebApplication.Controllers
         /// <summary>
         /// Creates a reservation
         /// </summary>
-        /// <param name="reservation">reservation</param>
+        /// <param name="reservation"></param>
         /// <returns>Status indicating whether the reservation request was sucessful or not</returns>
         /// <response code="200">Performs the reservation</response>
         /// <response code="409">The reservation cannot be fulfilled</response>
         [ProducesResponseType(200)]
         [ProducesResponseType(409)]
-        [HttpPost]
-        public async Task<IMvcActionResult> Post([FromBody] Reservation reservation)
+        [HttpPost(Name="CreateReservation")]
+        public async Task<IMvcActionResult> Create(
+            [FromBody] Reservation reservation)
         {
             var r = await 
                 new ReservationsController(10, new ReservationsRepository())

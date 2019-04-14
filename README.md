@@ -16,3 +16,9 @@ How about business rules where:
 * High net worth clients can book the whole restaurant
 * Undesirable customers cannot book
 * Some customers are charged a flat booking fee, for some promotional customers the fee is waived, other customers are charged a percentage of their bill
+
+#### Notes
+
+Swashbuckle/Swagger generation ignores DefaultValue data annotation
+* [Swashbuckle.AspNetCore #412](https://github.com/domaindrivendev/Swashbuckle.AspNetCore/issues/412)
+* [AspNetCore.Docs #8087](https://github.com/aspnet/AspNetCore.Docs/issues/8087)

@@ -29,15 +29,18 @@ namespace Ploeh.Samples.BookingApi
             IsAccepted = isAccepted;
         }
 
-        //[DefaultValue("01/01/2019 17:00:00")]
         [Required]
         public DateTimeOffset Date { get; }
-        [ApiParameterDescription.DefaultValue("person@email.com"), Required, EmailAddress]
-        public string Email { get; set; }
+
+        [Required, EmailAddress, DefaultValue("person@email.com")]
+        public string Email { get; set;  }
+
         [Required, DefaultValue("name")]
-        public string Name { get; }
+        public string Name { get; set; }
+
         [Required, DefaultValue(1)]
-        public int Quantity { get; }
+        public int Quantity { get; set; }
+
         public bool IsAccepted { get; }
 
         public Reservation Accept()
