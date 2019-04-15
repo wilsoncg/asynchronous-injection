@@ -9,27 +9,25 @@ namespace Ploeh.Samples.BookingApi
 {
     public class ReservationsRepository : IReservationsRepository
     {
-        private readonly List<Reservation> reservations;
+        readonly List<Reservation> reservations;
+        readonly ActorService _actors;
 
-        public ReservationsRepository()
+        public ReservationsRepository(ActorService actors)
         {
             reservations = new List<Reservation>();
+            _actors = actors;
         }
 
         public Task<int> Create(Reservation reservation)
         {
-            //var result = CreateInternal(reservation);
-
-            reservations.Add(reservation);
-            // Hardly a robut implementation, since indices will be reused,
-            // but should be good enough for the purpose of a pair of
-            // integration tests
-            return Task.FromResult(reservations.IndexOf(reservation));
+            var result = CreateInternal(reservation);
+            return result;
         }
 
         Task<int> CreateInternal(Reservation reservation)
         {
-            //var r = await MvcApplication. SystemActors.
+            _actors.CreateReservationActor.Tell(new ReservationForCustomer(reservation), null);
+            //var r = await 
             return Task.FromResult(1);
         }
 
@@ -116,6 +114,11 @@ namespace Ploeh.Samples.BookingApi
     {
         public Reservation Reservation;
         public int CustomerId;
+
+        public ReservationForCustomer(Reservation reservation)
+        {
+            Reservation = reservation;
+        }
 
         public int CompareTo(ReservationForCustomer other)
         {

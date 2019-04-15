@@ -45,7 +45,7 @@ namespace BookingApi.WebApplication
             services.AddSingleton<ActorService>(s => 
             {
                 var app = ActorSystem.Create("app");
-                IActorRef createReservationActor = app.ActorOf<CreateReservationActor>();
+                IActorRef createReservationActor = app.ActorOf<CreateReservationActor>("create-reservation-actor");
                 return new ActorService(app, createReservationActor);
             });
         }
@@ -73,23 +73,5 @@ namespace BookingApi.WebApplication
             app.UseHttpsRedirection();
             app.UseMvc();
         }
-    }
-
-    public class ActorService : IDisposable
-    {
-        readonly ActorSystem _system;
-        public IActorRef CreateReservationActor { get; private set; }
-
-        public ActorService(ActorSystem system, IActorRef actor)
-        {
-            _system = system;
-            CreateReservationActor = actor;
-        }
-
-        public void Dispose()
-        {
-            _system.Terminate();
-            _system.Dispose();
-        }
-    }
+    }    
 }

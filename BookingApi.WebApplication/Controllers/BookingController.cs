@@ -38,7 +38,7 @@ namespace BookingApi.WebApplication.Controllers
             [FromBody] Reservation reservation)
         {
             var r = await 
-                new ReservationsController(10, new ReservationsRepository())
+                new ReservationsController(10, new ReservationsRepository(_actorService))
                 .Post(reservation);
             if (r is InternalServerErrorActionResult)
                 return

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Akka.Actor;
+using System;
 
 namespace Ploeh.Samples.BookingApi
 {
@@ -18,6 +19,24 @@ namespace Ploeh.Samples.BookingApi
         public IActionResult InternalServerError(string msg)
         {
             return new InternalServerErrorActionResult(msg);
+        }
+    }
+
+    public class ActorService : IDisposable
+    {
+        readonly ActorSystem _system;
+        public IActorRef CreateReservationActor { get; private set; }
+
+        public ActorService(ActorSystem system, IActorRef actor)
+        {
+            _system = system;
+            CreateReservationActor = actor;
+        }
+
+        public void Dispose()
+        {
+            _system.Terminate();
+            _system.Dispose();
         }
     }
 }
